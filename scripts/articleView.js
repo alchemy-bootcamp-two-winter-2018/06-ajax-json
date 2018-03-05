@@ -113,13 +113,33 @@ articleView.renderArticles = function(articles) {
 
 // REVIEW: This function will retrieve the data from either a local or remote source
 articleView.fetchAll = () => {
+  const renderData = function (data){
+    const articles = Article.loadAll(data);
+    articleView.renderArticles(articles);
+    articleView.setupView();
+  };
+
+  const fromLocal = function(data){
+    const hackerIpsum = JSON.parse(localStorage.getItem(data));
+    renderData(hackerIpsum);
+  };
+
+  const fromServer = function(){
   // TODOne:
-  $.getJSON('/data/hackerIpsum.json')
-    .then(hackerIpsum => {
-      const articles = Article.loadAll(hackerIpsum);
-      articleView.renderArticles(articles);
-      articleView.setupView();
-    })
+    $.getJSON('/data/hackerIpsum.json')
+      .then(hackerIpsum => {
+        localStorage.setItem('hackerIpsum', JSON.stringify(hackerIpsum));
+        renderData(hackerIpsum);
+        // const articles = Article.loadAll(hackerIpsum);
+        // console.log(hackerIpsum);
+        //replace with if /else
+
+        // articleView.renderArticles(articles);
+        // articleView.setupView();
+      })
+  };
+
+  localStorage.getItem('hackerIpsum') ? fromLocal('hackerIpsum') : fromServer()
 }
 
 articleView.setupView = () => {
