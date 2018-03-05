@@ -112,30 +112,23 @@ articleView.renderArticles = function(articles) {
 }
 
 // REVIEW: This function will retrieve the data from either a local or remote source
-articleView.fetchAll = () => {
+articleView.fetchAll = function() {
   // TODO:
   // 1) make an AJAX call to the server for the raw data
   $.getJSON('/data/hackerIpsum.json')
-    .done(articleData => {
-      console.log(articleData);
-    });
   // 2) ASYNCHRONOUSLY (use .then)
-  // A) call Article.loadAll with the data you got from the server and get array of Article objects
-  // B) call renderArticles to put the article object into the DOM
-  // C) call setupView method to finish wiring up the UI for things that need the data to be loaded
-
-  // $.getJSON('/data/neighborhoodDataSet.json')
-  //   .done(neighborhoodDataSet => {
-  //     // handle data directly by loading the ViewModels
-  //     const neighborhoods = Neighborhood.load(neighborhoodDataSet);
-  //     this.renderNeighborhoods(neighborhoods);
-  //     // wire up rest of view
-  //     this.setupView();
-  //   })
-  //   .fail(response => {
-  //     console.log('ERROR!', response);
-  //   });
-}
+    .then(articleData => {
+      // A) call Article.loadAll with the data you got from the server and get array of Article objects
+      const articles = Article.loadAll(articleData);
+      // B) call renderArticles to put the article object into the DOM
+      this.renderArticles(articles);
+      // C) call setupView method to finish wiring up the UI for things that need the data to be loaded
+      this.setupView();
+    })
+    .catch(response => {
+      console.log('ERROR!', response);
+    })
+};
 
 articleView.setupView = () => {
   articleView.populateFilters();
