@@ -149,5 +149,3 @@ articleView.initIndexPage = () => {
   // wire up in setup that doesn't need the data loaded
   articleView.handleMainNav();
 };
-
-articleView.initIndexPage();
