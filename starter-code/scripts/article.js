@@ -10,7 +10,7 @@ function Article (rawDataObj) {
 }
 
 // COMMENT: Why isn't this method written as an arrow function?
-// PUT YOUR RESPONSE HERE
+// It is not written with arrow functions because we are using 'this' as context for our methods. The context of 'this' would not be inherited if an arrow function was used.
 Article.prototype.toHtml = function() {
   let template = Handlebars.compile($('#article-template').text());
 
@@ -18,7 +18,7 @@ Article.prototype.toHtml = function() {
 
   // COMMENT: What is going on in the line below? What do the question mark and colon represent? How have we seen this same logic represented previously?
   // Not sure? Check the docs!
-  // PUT YOUR RESPONSE HERE
+  // This is a conditional (ternary) operator. If what is before the ? is true then the script in front of the : will run. If it is false then what is after the : will run.
   this.publishStatus = this.publishedOn ? `published ${this.daysAgo} days ago` : '(draft)';
   this.body = marked(this.body);
 
