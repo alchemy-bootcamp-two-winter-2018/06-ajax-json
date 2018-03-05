@@ -105,15 +105,34 @@ articleView.create = () => {
   $('#article-json').val(`${JSON.stringify(article)},`);
 };
 
-
-articleView.initIndexPage = () => {
-  Article.all.forEach(article => {
-    $('#articles').append(article.toHtml())
+articleView.renderArticles = function(articles) {
+    articles.forEach(article => {
+      $('#articles').append(article.toHtml())
+    });
   });
+}
 
+// REVIEW: This function will retrieve the data from either a local or remote source
+articleView.fetchAll = () => {
+  // TODO:
+  // 1) make an AJAX call to the server for the raw data
+  // 2) ASYNCHRONOUSLY (use .then) 
+      // A) call Article.loadAll with the data you got from the server and get array of Article objects
+      // B) call renderArticles to put the article object into the DOM
+      // C) call setupView method to finish wiring up the UI for things that need the data to be loaded 
+}
+
+articleView.setupView = () => {
   articleView.populateFilters();
   articleView.handleCategoryFilter();
   articleView.handleAuthorFilter();
-  articleView.handleMainNav();
   articleView.setTeasers();
+}
+
+articleView.initIndexPage = () => {
+  // TODO: call the fetchAll method to initiate and complete loading of articles
+  // (follow-on activities happen from the async handle in THAT method)
+
+  // wire up in setup that doesn't need the data loaded
+  articleView.handleMainNav();
 };
