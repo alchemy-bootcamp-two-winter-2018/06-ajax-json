@@ -10,7 +10,7 @@ function Article (rawDataObj) {
 }
 
 // COMMENT: Why isn't this method written as an arrow function?
-// PUT YOUR RESPONSE HERE
+// You can't use arrow functions in constructor functions.
 Article.prototype.toHtml = function() {
   let template = Handlebars.compile($('#article-template').text());
 
@@ -18,7 +18,7 @@ Article.prototype.toHtml = function() {
 
   // COMMENT: What is going on in the line below? What do the question mark and colon represent? How have we seen this same logic represented previously?
   // Not sure? Check the docs!
-  // PUT YOUR RESPONSE HERE
+  // This is a ternary operator. The item before the question mark is the condition, and asking does the value match. The string before the colon is the action to be taken if the condition returns true, and the string after is the action if false. It is basically a small if/else statement.
   this.publishStatus = this.publishedOn ? `published ${this.daysAgo} days ago` : '(draft)';
   this.body = marked(this.body);
 
