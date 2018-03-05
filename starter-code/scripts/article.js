@@ -10,7 +10,7 @@ function Article (rawDataObj) {
 }
 
 // COMMENT: Why isn't this method written as an arrow function?
-// PUT YOUR RESPONSE HERE
+// so 'this' can refer to the Article object that is passed into it
 Article.prototype.toHtml = function() {
   let template = Handlebars.compile($('#article-template').text());
 
