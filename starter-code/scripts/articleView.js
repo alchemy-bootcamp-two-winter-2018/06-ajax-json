@@ -113,7 +113,7 @@ articleView.renderArticles = function(articles) {
 
 // REVIEW: This function will retrieve the data from either a local or remote source
 articleView.fetchAll = function() {
-  // TODO:
+  // TODOne:
   // 1) make an AJAX call to the server for the raw data
   $.getJSON('/data/hackerIpsum.json')
   // 2) ASYNCHRONOUSLY (use .then)
@@ -138,7 +138,7 @@ articleView.setupView = () => {
 }
 
 articleView.initIndexPage = () => {
-  // TODO: call the fetchAll method to initiate and complete loading of articles
+  // TODOne: call the fetchAll method to initiate and complete loading of articles
   // (follow-on activities happen from the async handle in THAT method)
   articleView.fetchAll();
   // wire up in setup that doesn't need the data loaded

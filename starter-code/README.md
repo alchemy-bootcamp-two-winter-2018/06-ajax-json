@@ -13,7 +13,7 @@ Currently, the blog can only be viewed by cloning to your own machine and openin
 The blog uses HTML, CSS, and JS along with jQuery and Handlebars. For this stage, we've added AJAX and JSON.
 
 ## Change Log
-Unclear what level of change I'm documenting here. (Would an entire lab be a change, or should there be nearly as many changes as commits?)
+See commit history.
 
 ## Credits and Collaborations
 Starter code from Code Fellows.
