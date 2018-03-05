@@ -105,6 +105,8 @@ articleView.create = () => {
   $('#article-json').val(`${JSON.stringify(article)},`);
 };
 
+let articles = []; // eslint-disable-line
+
 articleView.renderArticles = function(articles) {
   articles.forEach(article => {
     $('#articles').append(article.toHtml())
@@ -115,6 +117,14 @@ articleView.renderArticles = function(articles) {
 articleView.fetchAll = () => {
   // TODO:
   // 1) make an AJAX call to the server for the raw data
+  $.getJSON('data/hackerIpsum.json')
+    .then( response => {
+      articles = response;
+    })
+    .catch( response => {
+      console.log('ERROR: ', response);
+    });
+
   // 2) ASYNCHRONOUSLY (use .then)
   // A) call Article.loadAll with the data you got from the server and get array of Article objects
   // B) call renderArticles to put the article object into the DOM
