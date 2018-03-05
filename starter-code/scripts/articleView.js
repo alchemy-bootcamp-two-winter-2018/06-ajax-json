@@ -105,30 +105,33 @@ articleView.create = () => {
   $('#article-json').val(`${JSON.stringify(article)},`);
 };
 
-let articles = []; // eslint-disable-line
-
-articleView.renderArticles = function(articles) {
-  articles.forEach(article => {
+articleView.renderArticles = function(articlesArray) {
+  articlesArray.forEach(article => {
     $('#articles').append(article.toHtml())
   });
 };
 
+let articles = []; // eslint-disable-line
+
 // REVIEW: This function will retrieve the data from either a local or remote source
 articleView.fetchAll = () => {
-  // TODO:
+  // TODONE:
   // 1) make an AJAX call to the server for the raw data
   $.getJSON('data/hackerIpsum.json')
-    .then( response => {
-      articles = response;
-    })
-    .catch( response => {
-      console.log('ERROR: ', response);
-    });
 
   // 2) ASYNCHRONOUSLY (use .then)
   // A) call Article.loadAll with the data you got from the server and get array of Article objects
   // B) call renderArticles to put the article object into the DOM
   // C) call setupView method to finish wiring up the UI for things that need the data to be loaded
+
+    .then( response => {
+      articles = Article.loadAll(response);
+      articleView.renderArticles(articles);
+      articleView.setupView();
+    })
+    .catch( response => {
+      console.log('ERROR: ', response);
+    })
 }
 
 articleView.setupView = () => {
@@ -139,9 +142,12 @@ articleView.setupView = () => {
 }
 
 articleView.initIndexPage = () => {
-  // TODO: call the fetchAll method to initiate and complete loading of articles
+  // TODONE: call the fetchAll method to initiate and complete loading of articles
   // (follow-on activities happen from the async handle in THAT method)
+  articleView.fetchAll();
 
   // wire up in setup that doesn't need the data loaded
   articleView.handleMainNav();
 };
+
+articleView.initIndexPage();

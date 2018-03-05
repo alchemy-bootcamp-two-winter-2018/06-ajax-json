@@ -34,7 +34,7 @@ Article.prototype.toHtml = function() {
 Article.loadAll = articleData => {
   articleData.sort((a,b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)))
 
-  const articles = [];
-  articleData.forEach(articleObject => articles.push(new Article(articleObject)))
-  return articles;
+  const rawData = [];
+  articleData.forEach(articleObject => rawData.push(new Article(articleObject)))
+  return rawData;
 }
