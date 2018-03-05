@@ -106,9 +106,8 @@ articleView.create = () => {
 };
 
 articleView.renderArticles = function(articles) {
-    articles.forEach(article => {
-      $('#articles').append(article.toHtml())
-    });
+  articles.forEach(article => {
+    $('#articles').append(article.toHtml())
   });
 }
 
@@ -116,10 +115,10 @@ articleView.renderArticles = function(articles) {
 articleView.fetchAll = () => {
   // TODO:
   // 1) make an AJAX call to the server for the raw data
-  // 2) ASYNCHRONOUSLY (use .then) 
-      // A) call Article.loadAll with the data you got from the server and get array of Article objects
-      // B) call renderArticles to put the article object into the DOM
-      // C) call setupView method to finish wiring up the UI for things that need the data to be loaded 
+  // 2) ASYNCHRONOUSLY (use .then)
+  // A) call Article.loadAll with the data you got from the server and get array of Article objects
+  // B) call renderArticles to put the article object into the DOM
+  // C) call setupView method to finish wiring up the UI for things that need the data to be loaded
 }
 
 articleView.setupView = () => {
