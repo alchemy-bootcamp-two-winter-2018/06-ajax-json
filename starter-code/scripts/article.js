@@ -10,7 +10,7 @@ function Article (rawDataObj) {
 }
 
 // COMMENT: Why isn't this method written as an arrow function?
-// PUT YOUR RESPONSE HERE
+// It would lose the context for "this", and it is a method
 Article.prototype.toHtml = function() {
   let template = Handlebars.compile($('#article-template').text());
 
@@ -18,7 +18,7 @@ Article.prototype.toHtml = function() {
 
   // COMMENT: What is going on in the line below? What do the question mark and colon represent? How have we seen this same logic represented previously?
   // Not sure? Check the docs!
-  // PUT YOUR RESPONSE HERE
+  // This is referring to a ternary expression. It's kind of a shorthand "if" statement - the question mark says "evaluate the following - if this.publishedOn has a value, it is true and you should change the publishStatus to 'published " (this.daysAgo) days ago'; otherwise, it is false and the article is publishStatus (draft)
   this.publishStatus = this.publishedOn ? `published ${this.daysAgo} days ago` : '(draft)';
   this.body = marked(this.body);
 
@@ -30,7 +30,8 @@ Article.prototype.toHtml = function() {
 // REVIEW: This function will take the rawData, how ever it is provided, and use it to instantiate all the articles. This code is moved from elsewhere, and encapsulated in a simply-named function for clarity.
 
 // COMMENT: Where is this function called? What does 'rawData' represent now? How is this different from previous labs?
-// PUT YOUR RESPONSE HERE
+// This function is called in articleView.js as part of the articleView.fetchall method. The rawData represents the data from our "server" which represents data that is not hard-coded locally on our machines. This is different from data which is stored in a javascript file in previous labs (blogArticles.js)
+
 Article.loadAll = articleData => {
   articleData.sort((a,b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)))
 
