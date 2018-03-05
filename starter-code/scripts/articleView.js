@@ -119,14 +119,15 @@ articleView.fetchAll = () => {
   // A) call Article.loadAll with the data you got from the server and get array of Article objects
   // B) call renderArticles to put the article object into the DOM
   // C) call setupView method to finish wiring up the UI for things that need the data to be loaded
-  $.getJSON('/data/hackerlpsum.json')
-    .done(articleDataSet => {
-      const articles = Article.loadAll(articleDataSet);
-      this.renderArticles(articles);
+  $.getJSON('data/hackerIpsum.json')
+    .then(hackerIpsum => {
+      const allArticles = Article.loadAll(hackerIpsum);
+      articleView.renderArticles(allArticles);
+      // console.log(allArticles);
 
-      this.setupView();
+      articleView.setupView();
     })
-    .fail(response => {
+    .catch(response => {
       console.log('ERROR!', response);
     });
 };
@@ -141,7 +142,7 @@ articleView.setupView = () => {
 articleView.initIndexPage = () => {
   // TODO: call the fetchAll method to initiate and complete loading of articles
   // (follow-on activities happen from the async handle in THAT method)
-
+  articleView.fetchAll();
   // wire up in setup that doesn't need the data loaded
   articleView.handleMainNav();
 };
