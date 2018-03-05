@@ -12,7 +12,7 @@ function Article (rawDataObj) {
 // COMMENT: Why isn't this method written as an arrow function?
 // Because of the contextual 'this'. If it was an arrow function you would have to replace all the 'this.' with 'article.'
 Article.prototype.toHtml = function() {
-    let template = Handlebars.compile($('#article-template').text());
+    const template = Handlebars.compile($('#article-template').text());
 
     this.daysAgo = parseInt((new Date() - new Date(this.publishedOn)) / 60 / 60 / 24 / 1000);
 
@@ -30,7 +30,7 @@ Article.prototype.toHtml = function() {
 // REVIEW: This function will take the rawData, how ever it is provided, and use it to instantiate all the articles. This code is moved from elsewhere, and encapsulated in a simply-named function for clarity.
 
 // COMMENT: Where is this function called? What does 'rawData' represent now? How is this different from previous labs?
-// PUT YOUR RESPONSE HERE
+// this is called in the articleView.fetchAll in the articleView.js page. rawData is now article data essentially
 Article.loadAll = articleData => {
     articleData.sort((a,b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)));
 

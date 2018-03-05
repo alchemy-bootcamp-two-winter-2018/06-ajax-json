@@ -119,16 +119,16 @@ articleView.fetchAll = function() {
     // 1) make an AJAX call to the server for the raw data
     $.getJSON('data/hackerIpsum.json')
     // 2) ASYNCHRONOUSLY (use .then)
-        .then(articleData => {
+        .done(articleData => {
         // A) call Article.loadAll with the data you got from the server and get array of Article objects
             //eslint-disable-next-line
             const articles = Article.loadAll(articleData);
             // B) call renderArticles to put the article object into the DOM
             this.renderArticles(articles);
-            // C) call setupView method to finish wiring up the UI for things that need the data to be loaded 
+            // C) call setupView method to finish wiring up the UI for things that need the data to be loaded
             this.setupView();
         })
-        .catch(response => {
+        .fail(response => {
             console.log('ERROR', response);
         });
 };
@@ -142,7 +142,7 @@ articleView.setupView = () => {
 
 articleView.initIndexPage = function() {
     // TODO: call the fetchAll method to initiate and complete loading of articles
-    this.articleView.fetchAll();
+    this.fetchAll();
     // (follow-on activities happen from the async handle in THAT method)
 
     // wire up in setup that doesn't need the data loaded
