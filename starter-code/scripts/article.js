@@ -9,9 +9,6 @@ function Article (rawDataObj) {
   this.publishedOn = rawDataObj.publishedOn;
 }
 
-// REVIEW: Instead of a global `articles = []` array, let's attach this list of all articles directly to the constructor function. Note: it is NOT on the prototype. In JavaScript, functions are themselves objects, which means we can add properties/values to them at any time. In this case, the array relates to ALL of the Article objects, so it does not belong on the prototype, as that would only be relevant to a single instantiated Article.
-Article.all = [];
-
 // COMMENT: Why isn't this method written as an arrow function?
 // PUT YOUR RESPONSE HERE
 Article.prototype.toHtml = function() {
@@ -37,17 +34,7 @@ Article.prototype.toHtml = function() {
 Article.loadAll = articleData => {
   articleData.sort((a,b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)))
 
-  articleData.forEach(articleObject => Article.all.push(new Article(articleObject)))
-}
-
-// REVIEW: This function will retrieve the data from either a local or remote source, and process it, then hand off control to the View.
-Article.fetchAll = () => {
-  // REVIEW: What is this 'if' statement checking for? Where was the rawData set to local storage?
-  if (localStorage.rawData) {
-
-    Article.loadAll();
-
-  } else {
-
-  }
+  const articles = [];
+  articleData.forEach(articleObject => articles.push(new Article(articleObject)))
+  return articles;
 }
