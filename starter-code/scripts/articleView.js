@@ -119,6 +119,8 @@ articleView.fetchAll = () => {
   $.getJSON('/data/hackerIpsum.json')
     .done(articleDataSet => {
       console.log('Loaded Data:', articleDataSet);
+      const articles = Article.loadAll(articleDataSet);
+      articleView.renderArticles(articles);
     })
     .fail(response =>{
       console.log('Error', response);
