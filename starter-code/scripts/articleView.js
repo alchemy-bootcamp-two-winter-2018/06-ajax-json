@@ -125,8 +125,7 @@ articleView.fetchAll = () => {
       articleView.renderArticles(Article.loadAll(articleDataSet));
       articleView.setupView();
     })
-    .fail(response => {
-      console.log('Error loading Article Data:', response);
+    .fail(() => {
       $('#articles').append('<h1>DATA UNABLE TO LOAD - TRY AGAIN<h1>');
     });
 }
