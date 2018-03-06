@@ -144,6 +144,7 @@ articleView.fetchAll = () => {
   // C) call setupView method to finish wiring up the UI for things that need the data to be loaded
 
   return localStorage.getItem('data') ? articleView.fromStorage() : articleView.fromJson();
+  // articleView.fromJson();
 };
 
 articleView.setupView = () => {
