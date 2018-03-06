@@ -114,18 +114,19 @@ articleView.renderArticles = function(articlesArray) {
 let articles = []; // eslint-disable-line
 
 // REVIEW: This function will retrieve the data from either a local or remote source
-articleView.fetchAll = () => {
-  // TODONE:
-  // 1) make an AJAX call to the server for the raw data
-  $.getJSON('data/hackerIpsum.json')
+// TODONE:
+// 1) make an AJAX call to the server for the raw data
+// 2) ASYNCHRONOUSLY (use .then)
+// A) call Article.loadAll with the data you got from the server and get array of Article objects
+// B) call renderArticles to put the article object into the DOM
+// C) call setupView method to finish wiring up the UI for things that need the data to be loaded
 
-  // 2) ASYNCHRONOUSLY (use .then)
-  // A) call Article.loadAll with the data you got from the server and get array of Article objects
-  // B) call renderArticles to put the article object into the DOM
-  // C) call setupView method to finish wiring up the UI for things that need the data to be loaded
+articleView.fetchAll = () => {
+  $.getJSON('data/hackerIpsum.json')
 
     .then( response => {
       articles = Article.loadAll(response);
+      // localStorage.setItem('lsArticles', articles);
       articleView.renderArticles(articles);
       articleView.setupView();
     })
