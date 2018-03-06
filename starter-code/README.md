@@ -20,4 +20,4 @@ NOTE: Live Server is required to run this code.
 03-05-2018 3:00pm - All initial goals have been reached.
 
 ## Credits and Collaborations
-Special thanks to everyone at Alchemy Code lab!
+Thanks to everyone at Alchemy Code lab! Special thanks to Jen for her magnificent Rubber Duckying.

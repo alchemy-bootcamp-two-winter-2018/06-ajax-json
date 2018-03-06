@@ -125,8 +125,8 @@ articleView.fetchAll = () => {
   $.getJSON('data/hackerIpsum.json')
 
     .then( response => {
-      articles = Article.loadAll(response);
-      // localStorage.setItem('lsArticles', articles);
+      localStorage.setItem('lsArticles', (JSON.stringify(response)));
+      articles = Article.loadAll((JSON.parse(localStorage.getItem('lsArticles'))));
       articleView.renderArticles(articles);
       articleView.setupView();
     })
