@@ -123,7 +123,7 @@ articleView.fetchAll = () => {
     $.getJSON(`/data/hackerIpsum.json`)
       .then((data, param, xhr) => {
         localStorage.setItem(`hackerIpsum`, JSON.stringify(data));
-        localStorage.setItem('etag', xhr.getResponseHeader('etag'));
+        localStorage.setItem('eTag', xhr.getResponseHeader('eTag'));
         renderData(data);
       })
       .catch( response => {
@@ -137,8 +137,8 @@ articleView.fetchAll = () => {
       method: 'HEAD',
     })
       .then((param1, param2, xhr) =>{
-        const etag = xhr.getResponseHeader('etag');
-        if (etag === localStorage.getItem('etag')) {
+        const eTag = xhr.getResponseHeader('eTag');
+        if (eTag === localStorage.getItem('eTag')) {
           const hackerIpsum = JSON.parse(localStorage.getItem('hackerIpsum'));
           renderData(hackerIpsum);
         } else {
@@ -147,7 +147,7 @@ articleView.fetchAll = () => {
       })
   }
 
-  if (localStorage.getItem('etag')){
+  if (localStorage.getItem('eTag')){
     tryEtag();
   } else {
     getJSON();
