@@ -122,11 +122,6 @@ let articles = []; // eslint-disable-line
 // C) call setupView method to finish wiring up the UI for things that need the data to be loaded
 
 articleView.fetchAll = () => {
-  // $.getJSON('data/hackerIpsum.json').then((data, param, xhr) => {
-  //   const test = xhr.getResponseHeader('ETag');
-  //   console.log(test);
-  // });
-
   if (localStorage.getItem('lsEtag') && localStorage.getItem('lsArticles')) {
     $.getJSON('data/hackerIpsum.json').then( (data, param, xhr) => {
       if (localStorage.getItem('lsEtag') === xhr.getResponseHeader('ETag')) {
