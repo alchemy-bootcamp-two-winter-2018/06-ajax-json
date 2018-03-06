@@ -130,7 +130,10 @@ articleView.fetchAll = () => {
         localStorage.setItem('etag', xhr.getResponseHeader('etag'));
         renderData(data);
       }
-    });
+    })
+    .catch( response => {
+      console.log('Error!', response);
+    })
 }
 
 articleView.setupView = () => {
