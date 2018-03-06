@@ -119,27 +119,18 @@ articleView.fetchAll = () => {
     articleView.setupView();
   };
 
-  const fromLocal = function(data){
-    const hackerIpsum = JSON.parse(localStorage.getItem(data));
-    renderData(hackerIpsum);
-  };
-
-  const fromServer = function(){
-  // TODOne:
-    $.getJSON('/data/hackerIpsum.json')
-      .then(hackerIpsum => {
-        localStorage.setItem('hackerIpsum', JSON.stringify(hackerIpsum));
+  $.getJSON(`/data/hackerIpsum.json`)
+    .then((data, param, xhr) => {
+      const etag = xhr.getResponseHeader('etag');
+      if (etag === localStorage.getItem('etag')) {
+        const hackerIpsum = JSON.parse(localStorage.getItem('hackerIpsum'));
         renderData(hackerIpsum);
-        // const articles = Article.loadAll(hackerIpsum);
-        // console.log(hackerIpsum);
-        //replace with if /else
-
-        // articleView.renderArticles(articles);
-        // articleView.setupView();
-      })
-  };
-
-  localStorage.getItem('hackerIpsum') ? fromLocal('hackerIpsum') : fromServer()
+      } else {
+        localStorage.setItem(`hackerIpsum`, JSON.stringify(data));
+        localStorage.setItem('etag', xhr.getResponseHeader('etag'));
+        renderData(data);
+      }
+    });
 }
 
 articleView.setupView = () => {
