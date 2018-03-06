@@ -122,29 +122,27 @@ let articles = []; // eslint-disable-line
 // C) call setupView method to finish wiring up the UI for things that need the data to be loaded
 
 articleView.fetchAll = () => {
-  if (localStorage.getItem('lsEtag') && localStorage.getItem('lsArticles')) {
-    $.getJSON('data/hackerIpsum.json').then( (data, param, xhr) => {
+  $.ajax({url: 'data/hackerIpsum.json', method: 'HEAD'})
+    .then( (data, param, xhr) => {
       if (localStorage.getItem('lsEtag') === xhr.getResponseHeader('ETag')) {
         articles = Article.loadAll((JSON.parse(localStorage.getItem('lsArticles'))));
         articleView.renderArticles(articles);
         articleView.setupView();
+      } else {
+        $.getJSON('data/hackerIpsum.json')
+          .then((response, param, xhr) => {
+            localStorage.setItem('lsArticles', (JSON.stringify(response)));
+            localStorage.setItem('lsEtag', (xhr.getResponseHeader('ETag')));
+            articles = Article.loadAll(response);
+            articleView.renderArticles(articles);
+            articleView.setupView();
+          })
       }
-    });
-  } else {
-    $.getJSON('data/hackerIpsum.json')
-      .then((response, param, xhr) => {
-        localStorage.setItem('lsArticles', (JSON.stringify(response)));
-        localStorage.setItem('lsEtag', (xhr.getResponseHeader('ETag')));
-        articles = Article.loadAll(response);
-        articleView.renderArticles(articles);
-        articleView.setupView();
-      })
-      .catch( response => {
-        console.log('ERROR: ', response);
-      })
-  }
-
-}
+    })
+    .catch( response => {
+      console.log('ERROR: ', response);
+    })
+};
 
 articleView.setupView = () => {
   articleView.populateFilters();
