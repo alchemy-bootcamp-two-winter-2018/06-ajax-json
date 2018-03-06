@@ -119,21 +119,39 @@ articleView.fetchAll = () => {
     articleView.setupView();
   };
 
-  $.getJSON(`/data/hackerIpsum.json`)
-    .then((data, param, xhr) => {
-      const etag = xhr.getResponseHeader('etag');
-      if (etag === localStorage.getItem('etag')) {
-        const hackerIpsum = JSON.parse(localStorage.getItem('hackerIpsum'));
-        renderData(hackerIpsum);
-      } else {
+  const getJSON = function () {
+    $.getJSON(`/data/hackerIpsum.json`)
+      .then((data, param, xhr) => {
         localStorage.setItem(`hackerIpsum`, JSON.stringify(data));
         localStorage.setItem('etag', xhr.getResponseHeader('etag'));
         renderData(data);
-      }
+      })
+      .catch( response => {
+        console.log('Error!', response);
+      })
+  };
+
+  const tryEtag = function () {
+    $.ajax({
+      url: `/data/hackerIpsum.json`,
+      method: 'HEAD',
     })
-    .catch( response => {
-      console.log('Error!', response);
-    })
+      .then((param1, param2, xhr) =>{
+        const etag = xhr.getResponseHeader('etag');
+        if (etag === localStorage.getItem('etag')) {
+          const hackerIpsum = JSON.parse(localStorage.getItem('hackerIpsum'));
+          renderData(hackerIpsum);
+        } else {
+          getJSON();
+        }
+      })
+  }
+
+  if (localStorage.getItem('etag')){
+    tryEtag();
+  } else {
+    getJSON();
+  }
 }
 
 articleView.setupView = () => {
