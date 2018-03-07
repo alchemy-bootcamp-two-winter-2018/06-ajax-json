@@ -121,11 +121,11 @@ articleView.fetchAll = () => {
   // B) call renderArticles to put the article object into the DOM
   // C) call setupView method to finish wiring up the UI for things that need the data to be loaded
   $.getJSON('/data/hackerIpsum.json')
-    .done(articleDataSet => {
+    .then(articleDataSet => {
       articleView.renderArticles(Article.loadAll(articleDataSet));
       articleView.setupView();
     })
-    .fail(() => {
+    .catch(() => {
       $('#articles').append('<h1>DATA UNABLE TO LOAD - TRY AGAIN<h1>');
     });
 }
