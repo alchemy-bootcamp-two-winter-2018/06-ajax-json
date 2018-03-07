@@ -18,7 +18,7 @@ Article.prototype.toHtml = function() {
 
     // COMMENT: What is going on in the line below? What do the question mark and colon represent? How have we seen this same logic represented previously?
     // Not sure? Check the docs!
-    // This is checking to see if there is anything in publishedOn yet. The ? means if true, and the : mean if false. The things after the ? and the : is what will be returned and visible on the page.
+    // This is a Ternary checking to see if there is anything in publishedOn yet. The ? means if true, and the : mean if false. The things after the ? and the : is what will be returned and visible on the page.
     this.publishStatus = this.publishedOn ? `published ${this.daysAgo} days ago` : '(draft)';
     this.body = marked(this.body);
 
