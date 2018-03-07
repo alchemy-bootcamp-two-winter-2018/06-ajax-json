@@ -10,7 +10,7 @@ function Article (rawDataObj) {
 }
 
 // COMMENT: Why isn't this method written as an arrow function?
-// PUT YOUR RESPONSE HERE
+// It is not written with arrow functions because we are using 'this' as context for our methods. The context of 'this' would not be inherited if an arrow function was used.
 Article.prototype.toHtml = function() {
   let template = Handlebars.compile($('#article-template').text());
 
@@ -18,7 +18,7 @@ Article.prototype.toHtml = function() {
 
   // COMMENT: What is going on in the line below? What do the question mark and colon represent? How have we seen this same logic represented previously?
   // Not sure? Check the docs!
-  // PUT YOUR RESPONSE HERE
+  // This is a conditional (ternary) operator. If what is before the ? is true then the script in front of the : will run. If it is false then what is after the : will run.
   this.publishStatus = this.publishedOn ? `published ${this.daysAgo} days ago` : '(draft)';
   this.body = marked(this.body);
 
@@ -30,7 +30,7 @@ Article.prototype.toHtml = function() {
 // REVIEW: This function will take the rawData, how ever it is provided, and use it to instantiate all the articles. This code is moved from elsewhere, and encapsulated in a simply-named function for clarity.
 
 // COMMENT: Where is this function called? What does 'rawData' represent now? How is this different from previous labs?
-// PUT YOUR RESPONSE HERE
+// It is called in the fetchAll method once we get all the data. rawData represents the data stored in the hackerIpsum.json file. It is different because we are call the data using JSON, rather than just refering to the data in another js file. 
 Article.loadAll = articleData => {
   articleData.sort((a,b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)))
 

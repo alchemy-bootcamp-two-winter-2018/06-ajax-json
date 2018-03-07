@@ -33,7 +33,7 @@
   }
 
   #filters li {
-    width: 20em;
+    /* width: 20em; */
     display: inline;
   }
 }
