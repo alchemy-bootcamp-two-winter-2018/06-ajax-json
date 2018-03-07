@@ -106,20 +106,52 @@ articleView.create = () => {
 };
 
 articleView.renderArticles = function(articles) {
-    articles.forEach(article => {
-      $('#articles').append(article.toHtml())
-    });
+  articles.forEach(article => {
+    $('#articles').append(article.toHtml())
   });
-}
+};
 
 // REVIEW: This function will retrieve the data from either a local or remote source
 articleView.fetchAll = () => {
-  // TODO:
-  // 1) make an AJAX call to the server for the raw data
-  // 2) ASYNCHRONOUSLY (use .then) 
-      // A) call Article.loadAll with the data you got from the server and get array of Article objects
-      // B) call renderArticles to put the article object into the DOM
-      // C) call setupView method to finish wiring up the UI for things that need the data to be loaded 
+  const renderData = function (data){
+    const articles = Article.loadAll(data);
+    articleView.renderArticles(articles);
+    articleView.setupView();
+  };
+
+  const getJSON = function () {
+    $.getJSON(`/data/hackerIpsum.json`)
+      .then((data, param, xhr) => {
+        localStorage.setItem(`hackerIpsum`, JSON.stringify(data));
+        localStorage.setItem('eTag', xhr.getResponseHeader('eTag'));
+        renderData(data);
+      })
+      .catch( response => {
+        console.log('Error!', response);
+      })
+  };
+
+  const tryEtag = function () {
+    $.ajax({
+      url: `/data/hackerIpsum.json`,
+      method: 'HEAD',
+    })
+      .then((param1, param2, xhr) =>{
+        const eTag = xhr.getResponseHeader('eTag');
+        if (eTag === localStorage.getItem('eTag')) {
+          const hackerIpsum = JSON.parse(localStorage.getItem('hackerIpsum'));
+          renderData(hackerIpsum);
+        } else {
+          getJSON();
+        }
+      })
+  }
+
+  if (localStorage.getItem('eTag')){
+    tryEtag();
+  } else {
+    getJSON();
+  }
 }
 
 articleView.setupView = () => {
@@ -130,9 +162,9 @@ articleView.setupView = () => {
 }
 
 articleView.initIndexPage = () => {
-  // TODO: call the fetchAll method to initiate and complete loading of articles
+  // TODOne: call the fetchAll method to initiate and complete loading of articles
   // (follow-on activities happen from the async handle in THAT method)
-
+  articleView.fetchAll();
   // wire up in setup that doesn't need the data loaded
   articleView.handleMainNav();
 };

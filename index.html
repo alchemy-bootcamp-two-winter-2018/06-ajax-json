@@ -22,6 +22,7 @@
         </header>
         <section class="article-body">{{{body}}}</section>
         <a href="#" class="read-on">Read on &rarr;</a>
+        <hr>
       </article>
     </script>
   </head>
@@ -83,5 +84,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
     <script src="scripts/article.js"></script>
     <script src="scripts/articleView.js"></script>
+    <!-- COMMENT: Calls the initIndexPage specifically loads scripts relevant to the page -->
+    <script>
+    articleView.initIndexPage();
+    </script>
   </body>
 </html>
